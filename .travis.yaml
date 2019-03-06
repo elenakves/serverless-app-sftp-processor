@@ -14,21 +14,21 @@ deploy:
   - provider: s3
     access_key_id: $AWS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: "S3 Bucket"
+    bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
     upload-dir: infrastructure
     local-dir: zips/cloudformationtemplate.zip
   - provider: s3
     access_key_id: $AWS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: "S3 Bucket"
+    bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
     upload-dir: infrastructure
     local-dir: zips/cloudformationtemplate.zip
   - provider: s3
     access_key_id: $AWS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: "S3 Bucket"
+    bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
     upload-dir: infrastructure
     local-dir: zips/cloudformationtemplate.zip
