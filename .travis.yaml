@@ -1,0 +1,34 @@
+language: generic
+
+addons:
+  apt:
+    packages:
+    - zip
+
+script:
+- zip -r9 zips/cloudformationtemplate.zip auth db etl lambdas network web buildspec.yml main.yaml
+- zip -r9 zips/sqslambda.zip lambdas/sqslambda
+- zip -r9 zips/apilambda.zip lambdas/apilambda
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: "S3 Bucket"
+    region: us-east-1
+    upload-dir: infrastructure
+    local-dir: zips/cloudformationtemplate.zip
+  - provider: s3
+    access_key_id: $AWS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: "S3 Bucket"
+    region: us-east-1
+    upload-dir: infrastructure
+    local-dir: zips/cloudformationtemplate.zip
+  - provider: s3
+    access_key_id: $AWS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: "S3 Bucket"
+    region: us-east-1
+    upload-dir: infrastructure
+    local-dir: zips/cloudformationtemplate.zip
