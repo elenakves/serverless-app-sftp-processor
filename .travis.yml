@@ -9,6 +9,11 @@ script:
 - zip -r9 cloudformationtemplate.zip auth db etl lambdas network web buildspec.yml main.yaml
 - zip -r9 sqslambda.zip lambdas/sqslambda
 - zip -r9 apilambda.zip lambdas/apilambda
+- rm -r $(ls -a | grep -v "cloudformationtemplate.zip|sqslambda.zip|apilambda.zip")
+- mkdir infrastructure
+- mkdir lambdas
+- mv cloudformationtemplate.zip infrastructure
+- mv *lambda.zip lambdas
 
 deploy:
   - provider: s3
@@ -17,18 +22,11 @@ deploy:
     bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
     upload-dir: infrastructure
-    local-dir: cloudformationtemplate.zip
+    local-dir: infrastructure
   - provider: s3
     access_key_id: $AWS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
     upload-dir: lambdas
-    local-dir: apilambda.zip
-  - provider: s3
-    access_key_id: $AWS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: "app-sourcecodebucket-us-east-1"
-    region: us-east-1
-    upload-dir: lambdas
-    local-dir: sqslambda.zip
+    local-dir: lambdas
