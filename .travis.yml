@@ -6,12 +6,11 @@ addons:
     - zip
 
 script:
-- mkdir infrastructure
-- mkdir upload
-- zip -r9 infrastructure/cloudformationtemplate.zip auth db etl lambdas network web buildspec.yml main.yaml
-- zip -r9 upload/sqslambda.zip lambdas/sqslambda
-- zip -r9 upload/apilambda.zip lambdas/apilambda
-- rm -rf lambdas && mv upload lambdas
+- mkdir -p upload/infrastructure
+- mkdir -p upload/lambdas
+- zip -r9 upload/infrastructure/cloudformationtemplate.zip auth db etl lambdas network web buildspec.yml main.yaml
+- zip -r9 upload/lambdas/sqslambda.zip lambdas/sqslambda
+- zip -r9 upload/lambdas/apilambda.zip lambdas/apilambda
 
 deploy:
   - provider: s3
@@ -19,7 +18,7 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
-    upload-dir: infrastructure
+    upload-dir: upload/infrastructure
     local-dir: infrastructure
     skip_cleanup: true
   - provider: s3
@@ -27,6 +26,6 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: "app-sourcecodebucket-us-east-1"
     region: us-east-1
-    upload-dir: lambdas
+    upload-dir: upload/lambdas
     local-dir: lambdas
     skip_cleanup: true
